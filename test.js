@@ -1,4 +1,4 @@
 app = Application("System Events")
 
 app.includeStandardAdditions = true
-app.displayDialog("Hellow World !")
+app.displayDialog("Hello World !")
