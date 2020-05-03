@@ -51,7 +51,7 @@ gamma = 1 / infectious  # recovery rate
 beta = Ro * gamma       # infection rate
 init = data.frame(S = 1-1e-5*1, E = 0, I = 1e-5, R = 0.0)
 
-##### Ordinary Differential Equations, Runge-KuttaMethod
+##### Ordinary Differential Equations, Runge-Kutta Method
 dS <- function(t, S, E, I, R) r <- -beta * S * I
 dE <- function(t, S, E, I, R) r <-  beta * S * I - epsilon * E
 dI <- function(t, S, E, I, R) r <-  epsilon * E - gamma * I
