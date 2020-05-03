@@ -41,24 +41,24 @@ rkode <- function(tmax, init, dt) {
   return(d)
 }
 
-## parameters
-Ro = 2.5          # basic reproduction number
-latent = 4        # latent period https://www.ijidonline.com/article/S1201-9712(20)30119-3/pdf
-infectious = 10   # infectious period
+##### Parameters
+Ro = 2.5          # basic reproduction number: https://twitter.com/ClusterJapan/status/1247463049662889985
+latent = 5        # latent period: https://twitter.com/ClusterJapan/status/1252845333366796288
+infectious = 10   # infectious period: about...
 
 epsilon = 1 / latent    # rate at which an exposed person becomes infective
 gamma = 1 / infectious  # recovery rate
-beta = Ro * gamma     # infection rate
+beta = Ro * gamma       # infection rate
 init = data.frame(S = 1-1e-5*1, E = 0, I = 1e-5, R = 0.0)
 
-## Ordinary Differential Equations, Runge-KuttaMethod
+##### Ordinary Differential Equations, Runge-KuttaMethod
 dS <- function(t, S, E, I, R) r <- -beta * S * I
 dE <- function(t, S, E, I, R) r <-  beta * S * I - epsilon * E
 dI <- function(t, S, E, I, R) r <-  epsilon * E - gamma * I
 dR <- function(t, S, E, I, R) r <-  gamma * I
 out = rkode(tmax=250, init=init, dt=0.1)
 
-## Plot - S: Susceptible, E: Exposed, I: Infected, R: Recovered
+##### Plot time series
 gdat = out %>% dplyr::rename(Susceptible=S, Exposed=E, Infected=I, Recovered=R) %>% 
   tidyr::gather(Index, dv, -Time) %>% 
   transform(Index = factor(Index, levels=c('Susceptible', 'Exposed', 'Infected', 'Recovered'))) %>% 
